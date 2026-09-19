@@ -1,0 +1,4 @@
+interface:
+  display_name: "Organizar Pasta"
+  short_description: "Analisa e organiza arquivos com segurança"
+  default_prompt: "Use $organizar-pasta para analisar esta pasta, mostrar o antes e depois e aguardar minha confirmação antes de alterar arquivos."

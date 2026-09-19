@@ -1,0 +1,35 @@
+<Application x:Class="Organiza.Wpf.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:Organiza.Wpf.Views"
+             xmlns:vm="clr-namespace:Organiza.Wpf.ViewModels"
+             xmlns:converters="clr-namespace:Organiza.Wpf.Converters"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <SolidColorBrush x:Key="BackgroundBrush" Color="#F5F7FA" />
+        <SolidColorBrush x:Key="SidebarBrush" Color="#172033" />
+        <SolidColorBrush x:Key="AccentBrush" Color="#2E6BE6" />
+        <SolidColorBrush x:Key="TextBrush" Color="#1C2536" />
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="16,10" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+        </Style>
+        <Style x:Key="Heading" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="26" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="0,0,0,8" />
+        </Style>
+        <DataTemplate DataType="{x:Type vm:FolderSelectionViewModel}"><views:FolderSelectionView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:DuplicatesViewModel}"><views:DuplicatesView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PdfSplitViewModel}"><views:PdfSplitView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:OrganizeViewModel}"><views:OrganizeView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:HistoryViewModel}"><views:HistoryView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SettingsViewModel}"><views:SettingsView /></DataTemplate>
+    </Application.Resources>
+</Application>

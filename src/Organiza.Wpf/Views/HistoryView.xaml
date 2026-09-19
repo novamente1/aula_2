@@ -1,0 +1,24 @@
+<UserControl x:Class="Organiza.Wpf.Views.HistoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <TextBlock Text="Relatório de execução" Style="{StaticResource Heading}" />
+            <TextBlock Text="{Binding Status}" Margin="0,0,0,18" Opacity="0.72" />
+            <Border Background="White" BorderBrush="#CDD6E4" BorderThickness="1" CornerRadius="8" Padding="16" Margin="0,0,0,16">
+                <TextBlock Text="{Binding LatestReport}" TextWrapping="Wrap" FontSize="14" LineHeight="21" />
+            </Border>
+        </StackPanel>
+        <DataGrid ItemsSource="{Binding Entries}" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" Background="White"
+                  EnableRowVirtualization="True" EnableColumnVirtualization="True"
+                  VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
+                  ScrollViewer.CanContentScroll="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Data" Binding="{Binding Timestamp, StringFormat={}{0:dd/MM/yyyy HH:mm:ss}}" Width="145" />
+                <DataGridTextColumn Header="Ação" Binding="{Binding Action}" Width="190" />
+                <DataGridTextColumn Header="O que foi modificado" Binding="{Binding Description}" Width="*" />
+                <DataGridTextColumn Header="Resultado" Binding="{Binding Result}" Width="100" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>

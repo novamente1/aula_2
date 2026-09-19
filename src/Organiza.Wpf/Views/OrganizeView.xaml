@@ -1,0 +1,103 @@
+<UserControl x:Class="Organiza.Wpf.Views.OrganizeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+    <DockPanel IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+        <StackPanel DockPanel.Dock="Top">
+            <TextBlock Text="Organizar e renomear" Style="{StaticResource Heading}" />
+            <TextBlock Text="Gere os nomes, confira o documento e marque Certo. O nome azul pode ser editado diretamente. Refazer relê toda a lista; aplicar exige 100% de aprovação." Opacity="0.72" TextWrapping="Wrap" />
+            <StackPanel Orientation="Horizontal" Margin="0,14,0,10">
+                <Button Content="1. Livro Mestre" Command="{Binding MasterBookCommand}" Padding="12,7"
+                        Background="#227447" Foreground="White" BorderThickness="0" />
+                <Button Content="2. GERAR NOMES PARA TODOS" Command="{Binding GenerateCommand}" Margin="8,0,0,0" Padding="12,7"
+                        Background="#1769AA" Foreground="White" BorderThickness="0" FontWeight="SemiBold" />
+                <Button Content="3. APLICAR NOMES APROVADOS" Command="{Binding ApplyCommand}" Margin="8,0,0,0" Padding="12,7"
+                        Background="#C24132" Foreground="White" FontWeight="Bold" BorderThickness="0" />
+            </StackPanel>
+            <TextBlock Text="{Binding Status}" Margin="0,0,0,12" />
+            <Border Background="#EAF1FF" BorderBrush="#B9CCF5" BorderThickness="1" CornerRadius="6"
+                    Padding="10" Margin="0,0,0,12">
+                <TextBlock Text="{Binding FolderModeNotice}" TextWrapping="Wrap" FontWeight="SemiBold" />
+            </Border>
+            <Border Background="#FFF4E5" BorderBrush="#C24132" BorderThickness="1" CornerRadius="6" Padding="12" Margin="0,0,0,12">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Visibility" Value="Visible" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding LockedFilesAlert}" Value="">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <TextBlock Text="{Binding LockedFilesAlert}" Foreground="#8A241A" FontWeight="SemiBold" TextWrapping="Wrap" />
+            </Border>
+        </StackPanel>
+        <DataGrid ItemsSource="{Binding Items}" AutoGenerateColumns="False" CanUserAddRows="False" Background="White"
+                  GridLinesVisibility="Horizontal" RowHeight="34" ColumnHeaderHeight="36" HeadersVisibility="Column"
+                  HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
+                  EnableRowVirtualization="True" EnableColumnVirtualization="True"
+                  VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
+                  ScrollViewer.CanContentScroll="True"
+                  IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="ORIGINAL — clique para conferir" Width="2*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding OriginalName}"
+                                    Command="{Binding DataContext.OpenFileCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding OriginalPath}"
+                                    ToolTip="{Binding OriginalPath}"
+                                    HorizontalContentAlignment="Left" Foreground="#1757A6"
+                                    Background="Transparent" BorderThickness="0" Padding="2" Cursor="Hand" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="NOME SUGERIDO — clique e edite" Width="2.4*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding SuggestedName, UpdateSourceTrigger=PropertyChanged}"
+                                     Foreground="#0B5FC6" Background="#EEF6FF" BorderBrush="#B6D4FE"
+                                     BorderThickness="0,0,0,1" Padding="4,2" VerticalContentAlignment="Center"
+                                     ToolTip="Clique e altere o nome. A extensão original será preservada." />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="CONFERIR" Width="190">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Editar" ToolTip="Editar manualmente este nome sugerido"
+                                        Command="{Binding DataContext.EditNameCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}" Width="48" Padding="4,3"
+                                        Background="#1769AA" Foreground="White" BorderThickness="0" />
+                                <Button Content="✓" ToolTip="Aprovar esta sugestão"
+                                        Command="{Binding DataContext.MarkCorrectCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}" Width="34" Padding="4,3" Margin="4,0,0,0"
+                                        Background="{Binding ApprovalBrush}" Foreground="White" BorderThickness="0" />
+                                <Button Content="↻ Refazer" ToolTip="Reprovar e reler todos os documentos"
+                                        Command="{Binding DataContext.ReanalyzeAllCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}" Width="72" Padding="4,3" Margin="4,0,0,0"
+                                        Background="#D97706" Foreground="White" BorderThickness="0" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="PASTA OFICIAL" Binding="{Binding DestinationFolder}" IsReadOnly="True" Width="185" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+        <Border Panel.ZIndex="20" Background="#D9F5F7FA"
+                Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Border Background="White" BorderBrush="#78B98F" BorderThickness="1" CornerRadius="10"
+                    Padding="28" Width="520" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Text="Processando... Aguarde a conclusão da etapa" FontSize="18" FontWeight="SemiBold"
+                               TextAlignment="Center" Margin="0,0,0,12" />
+                    <TextBlock Text="{Binding OperationStatus}" TextWrapping="Wrap" TextAlignment="Center" Margin="0,0,0,16" />
+                    <ProgressBar IsIndeterminate="True" Height="10" />
+                </StackPanel>
+            </Border>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Version>2.19.0</Version>
+    <AssemblyVersion>2.19.0.0</AssemblyVersion>
+    <FileVersion>2.19.0.0</FileVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Organiza.Application\Organiza.Application.csproj" />
+    <ProjectReference Include="..\Organiza.Domain\Organiza.Domain.csproj" />
+    <ProjectReference Include="..\Organiza.Infrastructure\Organiza.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

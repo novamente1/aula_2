@@ -1,0 +1,26 @@
+<UserControl x:Class="Organiza.Wpf.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel>
+        <TextBlock Text="Configurações" Style="{StaticResource Heading}" />
+        <TextBlock Text="Limites de segurança e integrações. Alterações futuras deverão continuar exigindo consentimento explícito." Opacity="0.72" Margin="0,0,0,24" />
+        <Border Background="White" CornerRadius="8" Padding="22">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="210" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                <Grid.RowDefinitions><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /></Grid.RowDefinitions>
+                <TextBlock Text="Versão" FontWeight="SemiBold" Margin="0,6" />
+                <TextBlock Grid.Column="1" Text="{Binding AppVersion}" Margin="0,6" />
+                <TextBlock Grid.Row="1" Text="Divisão de PDF" FontWeight="SemiBold" Margin="0,6" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding PdfLimit}" Margin="0,6" />
+                <TextBlock Grid.Row="2" Text="Caminhos longos" FontWeight="SemiBold" Margin="0,6" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding PathLimits}" Margin="0,6" />
+                <TextBlock Grid.Row="3" Text="Estrutura oficial" FontWeight="SemiBold" Margin="0,6" />
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding StructureCatalog}" Margin="0,6" TextWrapping="Wrap" />
+                <TextBlock Grid.Row="4" Text="Leitura de PDF" FontWeight="SemiBold" Margin="0,6" />
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding TextExtractionStatus}" Margin="0,6" />
+                <TextBlock Grid.Row="5" Text="Codex" FontWeight="SemiBold" Margin="0,6" />
+                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding CodexStatus}" Margin="0,6" Foreground="#9A5D00" />
+            </Grid>
+        </Border>
+    </StackPanel>
+</UserControl>
